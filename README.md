@@ -2,6 +2,14 @@
 
 My portfolio website built in flutter
 
+
+##To activate peanut for your flutter app (to share in a githubpage)
+ flutter pub global activate peanut
+ flutter pub global run  peanut
+ git push origin --set-upstream gh-pages
+  flutter pub global run  peanut
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

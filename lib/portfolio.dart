@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio/specs.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class Portfolio extends StatelessWidget {
   @override
@@ -42,6 +42,7 @@ class MyCard extends StatefulWidget {
 
 class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
   AnimationController animationController;
+
 //  AnimationController slideAnimationForBottomController;
 //  AnimationController _opacityAnimationForBottomController;
 //  AnimationController _opacityAnimationForImageController;
@@ -64,10 +65,14 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
   Animation _opacityAnimationForTop;
   Animation _opacityAnimationForAbout;
   bool _logoOpacity = true;
+
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(vsync: this, duration: Duration(seconds: 11));
+    animationController = AnimationController(
+      duration: Duration(seconds: 11),
+      vsync: this,
+    );
 
 //    slideAnimationForBottomController = AnimationController(
 //      vsync: this,
@@ -121,7 +126,8 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
         curve: Interval(0.1, 0.2),
       ),
     );
-    _slideAnimationForBottom = Tween<Offset>(begin: Offset(0.0, 0.35), end: Offset.zero).animate(
+    _slideAnimationForBottom =
+        Tween<Offset>(begin: Offset(0.0, 0.35), end: Offset.zero).animate(
       CurvedAnimation(
         parent: animationController,
         curve: Interval(0.1, 0.2),
@@ -150,26 +156,29 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
 //    _opacityAnimationForAbout =
 //        Tween<double>(begin: 0.0, end: 1.0).animate(_opacityAnimationForAboutController);
     _slideAnimationForTop =
-        Tween<Offset>(begin: Offset(0.0, -0.5), end: Offset(0.0, 0.07)).animate(CurvedAnimation(
+        Tween<Offset>(begin: Offset(0.0, -0.5), end: Offset(0.0, 0.07))
+            .animate(CurvedAnimation(
       parent: animationController,
       curve: Interval(0.1, 0.2),
     ));
 //    _slideAnimationForAbout = Tween<Offset>(begin: Offset(0.0, -0.5), end: Offset(0.0, 0.07))
 //        .animate(_slideAnimationForAboutController);
     _slideAnimationForImage =
-        Tween<Offset>(begin: Offset(10.0, 0.0), end: Offset(0.6, 0.0)).animate(CurvedAnimation(
-            parent: CurvedAnimation(
-              parent: animationController,
-              curve: Interval(0.25, 0.3),
-            ),
-            curve: Curves.easeInOut));
+        Tween<Offset>(begin: Offset(10.0, 0.0), end: Offset(0.6, 0.0))
+            .animate(CurvedAnimation(
+                parent: CurvedAnimation(
+                  parent: animationController,
+                  curve: Interval(0.25, 0.3),
+                ),
+                curve: Curves.easeInOut));
     _slideAnimationForSpecs =
-        Tween<Offset>(begin: Offset(-10.0, 0.05), end: Offset(0.0, 0.05)).animate(CurvedAnimation(
-            parent: CurvedAnimation(
-              parent: animationController,
-              curve: Interval(0.2, 0.3),
-            ),
-            curve: Curves.easeInOut));
+        Tween<Offset>(begin: Offset(-10.0, 0.05), end: Offset(0.0, 0.05))
+            .animate(CurvedAnimation(
+                parent: CurvedAnimation(
+                  parent: animationController,
+                  curve: Interval(0.2, 0.3),
+                ),
+                curve: Curves.easeInOut));
     animationController.forward();
   }
 
@@ -183,87 +192,88 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
         height: MediaQuery.of(context).size.height - 200,
         child: Stack(
           children: [
-            Align(
-              child: FadeTransition(
-                opacity: _opacityAnimationForLogo,
-                child: FlareActor(
-                  'assets/finish_logo.flr',
-                  animation: 'finish',
-                ),
-              ),
-            ),
-            Align(
-              child: SlideTransition(
-                position: _slideAnimationForTop,
-                child: FadeTransition(
-                  child: Container(
-                    margin: EdgeInsets.all(8.0),
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 1,
-                        color: Colors.black,
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          'assets/logo.png',
-                        ),
-                      ),
-                    ),
-                  ),
-                  opacity: _opacityAnimationForTop,
-                ),
-              ),
-              alignment: Alignment.topLeft,
-            ),
-            Align(
-              child: SlideTransition(
-                position: _slideAnimationForTop,
-                child: FadeTransition(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "CONTACT",
-                      style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  opacity: _opacityAnimationForTop,
-                ),
-              ),
-              alignment: Alignment.topRight,
-            ),
-            Align(
-              child: SlideTransition(
-                position: _slideAnimationForBottom,
-                child: FadeTransition(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                      onPressed: () {
-//                        _slideImageAnimationController.reverse();
-//                        _opacityAnimationForImageController.reverse();
-//                        _slideSpecsAnimationController.reverse();
-//                        _opacityAnimationForSpecsController.reverse();
-//                        _opacityAnimationForBottomController.reverse();
-//                        slideAnimationForBottomController.reverse();
-//                        _slideAnimationForAboutController.forward();
-//                        _opacityAnimationForBottomController.reverse();
-//                        slideAnimationForBottomController.reverse();
-                        //animationController.reverse(from: );
-                      },
-                      icon: Icon(
-                        CupertinoIcons.down_arrow,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  opacity: _opacityAnimationForBottom,
-                ),
-              ),
-              alignment: Alignment.bottomRight,
-            ),
+            // Align(
+            //   child: FadeTransition(
+            //     opacity: _opacityAnimationForLogo,
+            //     child: FlareActor(
+            //       'assets/finish_logo.flr',
+            //       animation: 'finish',
+            //     ),
+            //   ),
+            // ),
+            // Align(
+            //   child: SlideTransition(
+            //     position: _slideAnimationForTop,
+            //     child: FadeTransition(
+            //       child: Container(
+            //         margin: EdgeInsets.all(8.0),
+            //         width: 50,
+            //         height: 50,
+            //         decoration: BoxDecoration(
+            //           shape: BoxShape.circle,
+            //           border: Border.all(
+            //             width: 1,
+            //             color: Colors.black,
+            //           ),
+            //           image: DecorationImage(
+            //             image: AssetImage(
+            //               'assets/logo.png',
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       opacity: _opacityAnimationForTop,
+            //     ),
+            //   ),
+            //   alignment: Alignment.topLeft,
+            // ),
+            // Align(
+            //   child: SlideTransition(
+            //     position: _slideAnimationForTop,
+            //     child: FadeTransition(
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text(
+            //           "CONTACT",
+            //           style:
+            //               TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+            //         ),
+            //       ),
+            //       opacity: _opacityAnimationForTop,
+            //     ),
+            //   ),
+            //   alignment: Alignment.topRight,
+            // ),
+//             Align(
+//               child: SlideTransition(
+//                 position: _slideAnimationForBottom,
+//                 child: FadeTransition(
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(8.0),
+//                     child: IconButton(
+//                       onPressed: () {
+// //                        _slideImageAnimationController.reverse();
+// //                        _opacityAnimationForImageController.reverse();
+// //                        _slideSpecsAnimationController.reverse();
+// //                        _opacityAnimationForSpecsController.reverse();
+// //                        _opacityAnimationForBottomController.reverse();
+// //                        slideAnimationForBottomController.reverse();
+// //                        _slideAnimationForAboutController.forward();
+// //                        _opacityAnimationForBottomController.reverse();
+// //                        slideAnimationForBottomController.reverse();
+//                         //animationController.reverse(from: );
+//                       },
+//                       icon: Icon(
+//                         CupertinoIcons.down_arrow,
+//                         color: Colors.black,
+//                       ),
+//                     ),
+//                   ),
+//                   opacity: _opacityAnimationForBottom,
+//                 ),
+//               ),
+//               alignment: Alignment.bottomRight,
+//             ),
             Align(
               child: SlideTransition(
                 position: _slideAnimationForBottom,
@@ -274,20 +284,26 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
                       children: [
                         IconButton(
                           icon: FaIcon(FontAwesomeIcons.github),
-                          onPressed: () {},
+                          onPressed: () =>
+                              _launchURL('https://github.com/MeshkaniMohammad'),
                         ),
                         IconButton(
                           icon: FaIcon(FontAwesomeIcons.twitter),
-                          onPressed: () {},
+                          onPressed: () =>
+                              _launchURL('https://twitter.com/MoMeshkani'),
                         ),
                         IconButton(
-                          icon: FaIcon(FontAwesomeIcons.linkedin),
-                          onPressed: () {},
+                          icon: FaIcon(CupertinoIcons.mail),
+                          onPressed: () => _launchURL(
+                        Uri(
+                          scheme: 'mailto',
+                          path: 'mohammad.meshkani75@gmail.com',
+                          ).toString()),
                         ),
-                        IconButton(
-                          icon: FaIcon(FontAwesomeIcons.instagram),
-                          onPressed: () {},
-                        )
+                        // IconButton(
+                        //   icon: FaIcon(FontAwesomeIcons.instagram),
+                        //   onPressed: () {},
+                        // )
                       ],
                     ),
                   ),
@@ -301,7 +317,9 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
                 position: _slideAnimationForImage,
                 child: FadeTransition(
                   opacity: _opacityAnimationForImage,
-                  child: Image.asset('assets/myAvatar.png',width: 150,height: 200,),
+                  child: Image.asset(
+                    'assets/images/avatar.jpg',
+                  ),
                 ),
               ),
             ),
@@ -328,5 +346,13 @@ class _MyCardState extends State<MyCard> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
